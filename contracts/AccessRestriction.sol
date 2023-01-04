@@ -28,6 +28,7 @@ contract AccessRestriction {
     require(cost <= msg.value, "Insufficient balance!");
     _;
     // TODO: implement transfer using `call`
+    // TODO: implement `fallback` function`
     if(msg.value > cost) {
       payable(msg.sender).transfer(msg.value - cost);
     }
