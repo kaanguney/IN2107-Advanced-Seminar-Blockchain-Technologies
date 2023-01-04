@@ -12,7 +12,7 @@ contract AccessRestriction {
 
   // constructor 
   constructor() {
-    owner = payable(msg.sender);
+    owner = msg.sender;
     timestamp = block.timestamp;
   }
 
@@ -27,6 +27,7 @@ contract AccessRestriction {
   modifier contractCost(uint cost) {
     require(cost <= msg.value, "Insufficient balance!");
     _;
+    // TODO: implement transfer using `call`
     if(msg.value > cost) {
       payable(msg.sender).transfer(msg.value - cost);
     }
