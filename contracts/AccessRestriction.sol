@@ -4,8 +4,8 @@ pragma solidity >=0.4.22 <0.9.0;
 contract AccessRestriction {
 
   // declare state variables
-  address private owner;
-  uint private timestamp;
+  address owner;
+  uint timestamp;
 
   // define a custom event
   event ownerChange(address _owner, address buyer, uint _timestamp);
@@ -27,10 +27,12 @@ contract AccessRestriction {
   modifier contractCost(uint cost) {
     require(cost <= msg.value, "Insufficient balance!");
     _;
-    // TODO: implement transfer using `call`
-    // TODO: implement `fallback` function`
+    // TODO: implement `fallback`
+    // TODO: implement varying `transfer` practices in an `external contract`
     if(msg.value > cost) {
-      payable(msg.sender).transfer(msg.value - cost);
+      // payable(msg.sender).transfer(msg.value - cost);
+      (bool success, ) = address(this).call{value: msg.value - cost}("");
+      require(success, "Refund transfer failed!");
     }
   }
 
@@ -52,8 +54,8 @@ contract AccessRestriction {
     owner = _owner;
   }
 
-  // transfer ownership without only owner restriction
-  // should ideally adhere to `external` keyword
+  // use `external` in case function is not called by the contract itself
+  // due to gas efficiency
   function forceOwnerChange(address _owner) public payable contractCost(100 gwei) {
     owner = _owner;
   }
