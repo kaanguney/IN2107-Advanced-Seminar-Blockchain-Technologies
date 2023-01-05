@@ -7,8 +7,9 @@ contract AccessRestriction {
   address owner;
   uint timestamp;
 
-  // define a custom event
+  // define custom events
   event ownerChange(address _owner, address buyer, uint _timestamp);
+  event gasUsage(uint _gas);
 
   // constructor 
   constructor() {
@@ -27,12 +28,11 @@ contract AccessRestriction {
   modifier contractCost(uint cost) {
     require(cost <= msg.value, "Insufficient balance!");
     _;
-    // TODO: implement `fallback`
-    // TODO: implement varying `transfer` practices in an `external contract`
     if(msg.value > cost) {
-      // payable(msg.sender).transfer(msg.value - cost);
-      (bool success, ) = address(this).call{value: msg.value - cost}("");
-      require(success, "Refund transfer failed!");
+      uint current_gas = gasleft();
+      payable(msg.sender).transfer(msg.value - cost);
+      // demonstrate 2300 gas unit decrease in a `transfer` call
+      emit gasUsage(gasleft() - current_gas);
     }
   }
 

@@ -6,6 +6,7 @@ contract EmergencyStop {
   // declare state variables
   address owner;
   bool execute;
+  mapping(address => uint) balances;
 
   constructor() {
     owner = msg.sender;
@@ -30,12 +31,31 @@ contract EmergencyStop {
     _;
   }
 
+  // implement balance check
+  modifier balanceCheck(uint amount) {
+    require(balances[msg.sender] > amount, "Insufficient funds for withdrawal!");
+    _;
+  }
+
   function pause() public onlyOwner(owner) onExecute(execute) {
     execute = false;
   }
 
   function resume() public onlyOwner(owner) onPause(execute) {
     execute = true;
+  }
+
+  // deposit ether
+  function deposit() public onExecute(execute) payable {
+    balances[msg.sender] += msg.value;
+  }
+
+  // withdraw ether
+  // TODO: add re-entrancy guard
+  function withdraw() public onPause(execute) balanceCheck(msg.value) payable {
+      (bool success, ) = msg.sender.call{value: msg.value}("");
+      require(success, "Withdrawal failed!");
+      balances[msg.sender] = 0;
   }
 
 }
