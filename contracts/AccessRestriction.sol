@@ -19,6 +19,11 @@ contract AccessRestriction {
     instance = "Access Restriction Pattern";
   }
 
+  // implement getter for owner test
+  function getOwner() public view returns(address) {
+    return owner;
+  }
+
   // implement getter for instance test
   function getInstance() public view returns(string memory) {
     return instance;
