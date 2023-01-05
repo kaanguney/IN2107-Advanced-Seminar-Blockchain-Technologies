@@ -6,7 +6,7 @@ contract AccessRestriction {
   // declare state variables
   address owner;
   uint timestamp;
-  string name;
+  string instance;
 
   // define custom events
   event ownerChange(address _owner, address buyer, uint _timestamp);
@@ -16,12 +16,12 @@ contract AccessRestriction {
   constructor() {
     owner = msg.sender;
     timestamp = block.timestamp;
-    name = "Access Restriction";
+    instance = "Access Restriction Pattern";
   }
 
-  // implement getter for instance name test
-  function getName() public view returns(string memory) {
-    return (name);
+  // implement getter for instance test
+  function getInstance() public view returns(string memory) {
+    return instance;
   }
 
   // implement access restriction to change the owner

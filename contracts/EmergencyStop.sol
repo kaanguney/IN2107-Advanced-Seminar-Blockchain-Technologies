@@ -6,18 +6,18 @@ contract EmergencyStop {
   // declare state variables
   address owner;
   bool execute;
-  string name;
+  string instance;
   mapping(address => uint) balances;
 
   constructor() {
     owner = msg.sender;
     execute = true;
-    name = "Emergency Stop";
+    instance = "Emergency Stop Pattern";
   }
 
-  // implement getter for instance name test
-  function getName() public view returns(string memory) {
-    return (name);
+  // implement getter for instance test
+  function getInstance() public view returns(string memory) {
+    return instance;
   }
 
   // implement std. access restriction
