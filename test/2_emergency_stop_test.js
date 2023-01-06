@@ -5,9 +5,6 @@ let artifact = pattern.replace(' Pattern', '').replace(' ', '');
 // load compiled contract
 const EmergencyStop = artifacts.require(artifact);
 
-// load truffle assertions
-const truffleAssert = require("truffle-assertions");
-
 // test contract
 contract(EmergencyStop, (accounts) => {
 
