@@ -9,7 +9,7 @@ contract AccessRestriction {
   string instance;
 
   // define custom events
-  event ownerChange(address _owner, address buyer, uint _timestamp);
+  event ownerChange(address _owner, address _account, uint _timestamp);
   event gasUsage(uint _gas);
 
   // constructor 
@@ -36,18 +36,6 @@ contract AccessRestriction {
     _;
   }
 
-  // implement requirement to purchase
-  modifier contractCost(uint cost) {
-    require(cost <= msg.value, "Insufficient balance!");
-    _;
-    if(msg.value > cost) {
-      uint current_gas = gasleft();
-      payable(msg.sender).transfer(msg.value - cost);
-      // demonstrate 2300 gas unit decrease in a `transfer` call
-      emit gasUsage(gasleft() - current_gas);
-    }
-  }
-
   // implement requirement to disown the contract
   modifier onlyAfter(uint _time) {
     require(block.timestamp >= _time, "Cannot disown contract yet!");
@@ -66,9 +54,9 @@ contract AccessRestriction {
     owner = _owner;
   }
 
-  // use `external` in case function is not called by the contract itself
-  // due to gas efficiency
-  function forceOwnerChange(address _owner) public payable contractCost(100 gwei) {
+  // use `external` in case of using this.f() pattern
+  function forceOwnerChange(address _owner) public {
     owner = _owner;
+    emit gasUsage(gasleft());
   }
 }
