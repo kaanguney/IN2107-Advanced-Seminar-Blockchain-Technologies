@@ -1,9 +1,5 @@
-// define pattern
-let pattern = "Access Restriction Pattern";
-let artifact = pattern.replace(' Pattern', '').replace(' ', '');
-
 // load compiled contract
-const AccessRestriction = artifacts.require(artifact);
+const AccessRestriction = artifacts.require("AccessRestriction");
 
 // load truffle assertions
 const truffleAssert = require("truffle-assertions"); 
@@ -15,7 +11,7 @@ contract(AccessRestriction, (accounts) => {
     it("should return pattern name", async () => {
         const deployed = await AccessRestriction.deployed();
         const instance = await deployed.getInstance();
-        assert.equal(instance, pattern);
+        assert.equal(instance, "Access Restriction Pattern");
     });
     
     // test function modifier for owner

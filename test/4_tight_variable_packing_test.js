@@ -1,9 +1,5 @@
-// define pattern
-let pattern = "Tight Variable Packing Pattern";
-let artifact = pattern.replace(' Pattern', '').replaceAll(' ', '');
-
 // load compiled contract
-const TightVariablePacking = artifacts.require(artifact);
+const TightVariablePacking = artifacts.require("TightVariablePacking");
 
 // load truffle assertions
 const truffleAssert = require("truffle-assertions");
@@ -15,7 +11,7 @@ contract(TightVariablePacking, (accounts) => {
     it("should return pattern name", async () => {
         const deployed = await TightVariablePacking.deployed();
         const instance = await deployed.getInstance();
-        assert.equal(instance, pattern);
+        assert.equal(instance, "Tight Variable Packing Pattern");
     });
 
     // test gas event name

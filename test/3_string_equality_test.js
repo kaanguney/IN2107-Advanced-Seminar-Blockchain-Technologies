@@ -1,9 +1,5 @@
-// define pattern
-let pattern = "String Equality Pattern";
-let artifact = pattern.replace(' Pattern', '').replace(' ', '');
-
 // load compiled contract
-const StringEquality = artifacts.require(artifact);
+const StringEquality = artifacts.require("StringEquality");
 
 // load truffle assertions
 const truffleAssert = require("truffle-assertions");
@@ -15,7 +11,7 @@ contract(StringEquality, (accounts) => {
     it("should return pattern name", async () => {
         const deployed = await StringEquality.deployed();
         const instance = await deployed.getInstance();
-        assert.equal(instance, pattern);
+        assert.equal(instance, "String Equality Pattern");
     });
 
     // test string equality

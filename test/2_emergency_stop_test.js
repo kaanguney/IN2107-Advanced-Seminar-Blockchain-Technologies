@@ -1,9 +1,5 @@
-// define pattern
-let pattern = "Emergency Stop Pattern";
-let artifact = pattern.replace(' Pattern', '').replace(' ', '');
-
 // load compiled contract
-const EmergencyStop = artifacts.require(artifact);
+const EmergencyStop = artifacts.require("EmergencyStop");
 
 // test contract
 contract(EmergencyStop, (accounts) => {
@@ -12,7 +8,7 @@ contract(EmergencyStop, (accounts) => {
     it("should return pattern name", async () => {
         const deployed = await EmergencyStop.deployed();
         const instance = await deployed.getInstance();
-        assert.equal(instance, pattern);
+        assert.equal(instance, "Emergency Stop Pattern");
     });
 
     // test owner only function modifier
