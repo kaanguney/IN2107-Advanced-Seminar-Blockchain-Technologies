@@ -69,8 +69,8 @@ contract(MemoryArrayBuilding, (accounts) => {
     // test deleting seventh element
     it("should delete seventh element from storage", async () => {
         const deployed = await MemoryArrayBuilding.deployed();
-        await deployed.removeElement(7);
-        const deleted = await deployed.elementAt(7);
+        await deployed.removeElement(6);
+        const deleted = await deployed.elementAt(6);
         assert.equal(deleted.owner, "0x0000000000000000000000000000000000000000");
     });
 });
