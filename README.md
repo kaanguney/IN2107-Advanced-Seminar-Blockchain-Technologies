@@ -1,1 +1,1 @@
-# ethereum-design-patterns
+# IN2107 Advanced Seminar Blokchain Technologies
