@@ -7,13 +7,6 @@ const truffleAssert = require("truffle-assertions");
 // test contract
 contract(StateMachine, (accounts) => {
 
-    // test pattern name
-    it("should return pattern name", async () => {
-        const deployed = await StateMachine.deployed();
-        const instance = await deployed.getInstance();
-        assert.equal(instance, "State Machine Pattern");
-    });
-
     // test default state
     it("should return idle state", async () => {
         const deployed = await StateMachine.deployed();

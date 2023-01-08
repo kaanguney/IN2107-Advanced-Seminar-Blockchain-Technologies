@@ -3,9 +3,6 @@ pragma solidity >=0.4.22 <0.9.0;
 
 contract Validator {
 
-  // TODO: save keys in an array, delete mappings on a rebase request
-  // TODO: add keys from multiple accounts, e.g. Memory Array Building
-
   enum Validation {
     Idle,
     Record,
@@ -13,7 +10,7 @@ contract Validator {
   }
   Validation validation;
   mapping(string => bytes32) validator;
-
+  string[] keystore;
   event Transition(Validation _from, Validation _to, uint256 _gas);
 
   constructor() {
@@ -34,8 +31,9 @@ contract Validator {
     _;
   }
 
-  function record(string memory _data) public onIdle() {
-    validator[_data] = keccak256(abi.encodePacked(_data));
+  function record(string memory _key) public onIdle() {
+    validator[_key] = keccak256(abi.encodePacked(_key));
+    addKey(_key);
     emit Transition(validation, Validation.Record, gasleft());
     validation = Validation.Record;
   }
@@ -45,18 +43,29 @@ contract Validator {
     validation = Validation.Validate;
   }
 
+  function addKey(string memory _key) internal {
+    keystore.push(_key);
+  }
+
+  function deleteKey(string memory _key) internal {
+    delete validator[_key];
+  }
+
   function rebase() internal {
+    for (uint256 i = 0; i < keystore.length; i++) {
+      deleteKey(keystore[i]);
+    }
     emit Transition(validation, Validation.Idle, gasleft());
     validation = Validation.Idle;
   }
 
-  function verify(string memory _data) internal view returns(bool) {
-    bool found = validator[_data] == keccak256(abi.encodePacked(_data));
+  function verify(string memory _key) internal view returns(bool) {
+    bool found = validator[_key] == keccak256(abi.encodePacked(_key));
     return found;
   }
 
-  function validate(string memory _data) public onRecord() returns(bool) {
-    bool validity = verify(_data);
+  function validate(string memory _key) public onRecord() returns(bool) {
+    bool validity = verify(_key);
     propagate();
     return validity;
   }

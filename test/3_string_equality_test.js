@@ -7,13 +7,6 @@ const truffleAssert = require("truffle-assertions");
 // test contract
 contract(StringEquality, (accounts) => {
 
-    // test pattern name
-    it("should return pattern name", async () => {
-        const deployed = await StringEquality.deployed();
-        const instance = await deployed.getInstance();
-        assert.equal(instance, "String Equality Pattern");
-    });
-
     // test string equality
     it("should return false for equality check (easy)", async () => {
         const deployed = await StringEquality.deployed();

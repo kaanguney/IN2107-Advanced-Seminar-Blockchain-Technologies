@@ -3,19 +3,9 @@ pragma solidity >=0.4.22 <0.9.0;
 
 contract StringEquality {
 
-  // declare state variables
-  string instance;
-
-  // define custom events
   event Gas(uint256 _len1, uint256 _len2, uint256 _gas);
 
-  constructor() {
-    instance = "String Equality Pattern";
-  }
-
-  function getInstance() public view returns(string memory) {
-    return instance;
-  }
+  constructor() {}
 
   function compareStrings(string memory _t1, string memory _t2) public returns(bool) {
     bytes memory _b1 = bytes(_t1);

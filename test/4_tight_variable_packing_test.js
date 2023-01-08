@@ -7,13 +7,6 @@ const truffleAssert = require("truffle-assertions");
 // test contract
 contract(TightVariablePacking, (accounts) => {
 
-    // test pattern name
-    it("should return pattern name", async () => {
-        const deployed = await TightVariablePacking.deployed();
-        const instance = await deployed.getInstance();
-        assert.equal(instance, "Tight Variable Packing Pattern");
-    });
-
     // test gas event name
     it("should return event name (gas)", async () => {
         const deployed = await TightVariablePacking.deployed();

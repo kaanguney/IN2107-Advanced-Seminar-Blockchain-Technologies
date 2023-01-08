@@ -6,13 +6,6 @@ const truffleAssert = require("truffle-assertions");
 
 // test contract
 contract(AccessRestriction, (accounts) => {
-
-    // test pattern name
-    it("should return pattern name", async () => {
-        const deployed = await AccessRestriction.deployed();
-        const instance = await deployed.getInstance();
-        assert.equal(instance, "Access Restriction Pattern");
-    });
     
     // test function modifier for owner
     it("should change owner (success)", async () => {

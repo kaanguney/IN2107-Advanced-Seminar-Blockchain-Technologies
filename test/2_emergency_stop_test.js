@@ -4,13 +4,6 @@ const EmergencyStop = artifacts.require("EmergencyStop");
 // test contract
 contract(EmergencyStop, (accounts) => {
 
-    // test pattern name
-    it("should return pattern name", async () => {
-        const deployed = await EmergencyStop.deployed();
-        const instance = await deployed.getInstance();
-        assert.equal(instance, "Emergency Stop Pattern");
-    });
-
     // test owner only function modifier
     it("should return execution state", async () => {
         const deployed = await EmergencyStop.deployed();

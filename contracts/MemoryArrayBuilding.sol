@@ -3,8 +3,6 @@ pragma solidity >=0.4.22 <0.9.0;
 
 contract MemoryArrayBuilding {
 
-  // declare state variables
-  string instance;
   mapping(address => uint256) items;
   struct Content { 
     address owner; 
@@ -13,13 +11,7 @@ contract MemoryArrayBuilding {
   }
   Content[] contents;
 
-  constructor() {
-    instance = "Memory Array Building Pattern";
-  }
-
-  function getInstance() public view returns(string memory) {
-    return instance;
-  }
+  constructor() {}
 
   function addElement(address account, uint256 _seed) public {
     Content memory content;
@@ -37,8 +29,6 @@ contract MemoryArrayBuilding {
     _;
   }
 
-  // only deletes indexed data, cannot resize array
-  // because it is stored in storage
   function removeElement(uint256 _index) outOfBounds(_index) public {
     delete contents[_index];
   }

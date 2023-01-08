@@ -4,13 +4,6 @@ const MemoryArrayBuilding = artifacts.require("MemoryArrayBuilding");
 // test contract
 contract(MemoryArrayBuilding, (accounts) => {
 
-    // test pattern name
-    it("should return pattern name", async () => {
-        const deployed = await MemoryArrayBuilding.deployed();
-        const instance = await deployed.getInstance();
-        assert.equal(instance, "Memory Array Building Pattern");
-    });
-
     // test adding a single element to storage by owner
     it("should add an element to storage by owner", async () => {
         const deployed = await MemoryArrayBuilding.deployed();
