@@ -1,10 +1,7 @@
-// load compiled contract
 const StateMachine = artifacts.require("StateMachine");
 
-// load truffle assertions
 const truffleAssert = require("truffle-assertions");
 
-// test contract
 contract(StateMachine, (accounts) => {
 
     // test default state

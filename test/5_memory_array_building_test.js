@@ -1,7 +1,5 @@
-// load compiled contract
 const MemoryArrayBuilding = artifacts.require("MemoryArrayBuilding");
 
-// test contract
 contract(MemoryArrayBuilding, (accounts) => {
 
     // test adding a single element to storage by owner

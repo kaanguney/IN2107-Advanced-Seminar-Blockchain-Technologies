@@ -1,10 +1,7 @@
-// load compiled contract
 const StringEquality = artifacts.require("StringEquality");
 
-// load truffle assertions
 const truffleAssert = require("truffle-assertions");
 
-// test contract
 contract(StringEquality, (accounts) => {
 
     // test string equality

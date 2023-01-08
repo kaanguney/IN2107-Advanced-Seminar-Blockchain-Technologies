@@ -1,10 +1,7 @@
-// load compiled contract
 const TightVariablePacking = artifacts.require("TightVariablePacking");
 
-// load truffle assertions
 const truffleAssert = require("truffle-assertions");
 
-// test contract
 contract(TightVariablePacking, (accounts) => {
 
     // test gas event name

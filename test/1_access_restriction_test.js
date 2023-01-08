@@ -1,10 +1,7 @@
-// load compiled contract
 const AccessRestriction = artifacts.require("AccessRestriction");
 
-// load truffle assertions
 const truffleAssert = require("truffle-assertions"); 
 
-// test contract
 contract(AccessRestriction, (accounts) => {
     
     // test function modifier for owner

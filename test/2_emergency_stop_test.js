@@ -1,7 +1,5 @@
-// load compiled contract
 const EmergencyStop = artifacts.require("EmergencyStop");
 
-// test contract
 contract(EmergencyStop, (accounts) => {
 
     // test owner only function modifier
