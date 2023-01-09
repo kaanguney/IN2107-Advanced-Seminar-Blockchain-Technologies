@@ -1,1 +1,1 @@
-# IN2107 Advanced Seminar Blokchain Technologies
+# IN2107 Advanced Seminar Blockchain Technologies
