@@ -26,5 +26,5 @@
 ## Contracts
 * Individual patterns and migration files are self-explanatory, therefore this section mainly focuses on [Validator.sol](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts/Validator.sol) and the correspoding unit tests file [7_validator_test.js](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/test/7_validator_test.js).
 * Validator is a state machine, replicating the core concept embedded in Ethereum blokchain itself.
-* There are three states in the whole validation process which are store with an attribute defined in contract storage, that is `enum Validation { Idle, Record, Validate}`.
+* There are three states in the whole validation process which are store with an attribute defined in contract storage, that is `enum Validation { Idle, Record, Validate }`.
  
