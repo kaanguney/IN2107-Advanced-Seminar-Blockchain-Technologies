@@ -7,7 +7,8 @@
     * [Contracts](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts)
     * [Migrations](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/migrations)
     * [Tests](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/test)
-* Contracts are written in Solidity, the programming language for writing smart contracts on the Ethereum blockchain. A brief look on this cheatsheet should provide enough syntactical information to replicate the `Validator` or patterns used in the `Validator`, which are also located in the contracts directory.
+* Contracts are written in Solidity, the programming language for writing smart contracts on the Ethereum blockchain. A brief look on this [cheatsheet](https://docs.soliditylang.org/en/v0.8.17/cheatsheet.html) should provide enough syntactical information to replicate the `Validator` or patterns used in the `Validator`, which are also located in the contracts directory.
+* Migrations are essentially source files that have subroutines for deploying smart contracts to [Ganache](https://trufflesuite.com/ganache/).
 * Not all but most of the patterns located in the contracts are used to replicate commonly acknowledged best practices during smart contract development.
 * Note that product source file is completely original but patterns are inspired / referenced by this very informative [repository](https://github.com/fravoll/solidity-patterns) and this [blog post](https://dev.to/jamiescript/design-patterns-in-solidity-1i28) published by Jamie Bones.
 
@@ -21,3 +22,9 @@
 * [npm](https://www.npmjs.com) (8.19.2)
   * [Truffle Assertions](https://www.npmjs.com/package/truffle-assertions) (^0.9.2)
   * [qrcode](https://www.npmjs.com/package/qrcode) (^1.5.1)
+
+## Contracts
+* Individual patterns and migration files are self-explanatory, therefore this section mainly focuses on [Validator.sol](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts/Validator.sol) and the correspoding unit tests file [7_validator_test.js](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/test/7_validator_test.js).
+* `Validator` is a state machine, replicating the core concept embedded in Ethereum blokchain itself.
+* There are three states in the whole validation process which are store with an attribute defined in contract storage, that is `enum Validation {}`.
+ 
