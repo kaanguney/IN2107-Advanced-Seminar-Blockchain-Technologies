@@ -26,5 +26,7 @@
 ## Contracts
 * Individual patterns and migration files are self-explanatory, therefore this section mainly focuses on [Validator.sol](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts/Validator.sol) and the correspoding unit tests file [7_validator_test.js](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/test/7_validator_test.js).
 * Validator is a state machine, replicating the core concept embedded in Ethereum blokchain itself.
-* There are three states in the whole validation process which are store with an attribute defined in contract storage, that is `enum Validation { Idle, Record, Validate }`.
+* There are three states in the whole validation process which are stored with an attribute defined in contract storage, that is `enum Validation { Idle, Record, Validate }`.
+* Validator also has a `string[] keystore`, where data points, i.e. keys are stored. Note that `keystore` is a storage variable in the smart contract.
+* In order to validate the keys stored in the contract storage, a mapping is necessary to apply the String Equality Pattern demonstrated in a separate contract in the contracts directory.
  
