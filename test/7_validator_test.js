@@ -50,12 +50,10 @@ contract(Validator, (accounts) => {
         await truffleAssert.reverts(deployed.record(product));
     });
 
-    // validate first product
-    it("should validate first product", async () => {
+    // attempt an incorrect rebasing operation
+    it("should attempt an incorrect rebasing operation", async () => {
         const deployed = await Validator.deployed();
-        const product = qr.generator.store()[0];
-        const validity = await deployed.validate.call(product);
-        assert.equal(validity, true);
+        await truffleAssert.reverts(deployed.rebase());
     });
 
     // attempt an incorrect validation
@@ -64,5 +62,87 @@ contract(Validator, (accounts) => {
         const product = qr.generator.store()[4];
         const validity = await deployed.validate.call(product);
         assert.equal(validity, false);
+    });
+
+    // validate first product
+    it("should validate first product", async () => {
+        const deployed = await Validator.deployed();
+        const product = qr.generator.store()[0];
+        const validity = await deployed.validate.call(product);
+        assert.equal(validity, true);
+    });
+
+    // attempt to call an internal function
+    it("should attempt to call an internal function", async () => {
+        const deployed = await Validator.deployed();
+        const product = qr.generator.store()[0];
+        try {
+            await truffleAssert.reverts(deployed.verify(product));
+        }
+        catch(error) {}
+    });
+
+    // test validity of emitted validation event (parameters)
+    it("should propagate state ", async () => {
+        const deployed = await Validator.deployed();
+        const result = await deployed.propagate();
+        truffleAssert.eventEmitted(result, "Transition", (ev) => {
+            return ev._from == 1 && ev._to == 2 && ev._gas;
+        });
+    });
+
+    // rebase after validating the first product
+    it("should rebase to the default state", async () => {
+        const deployed = await Validator.deployed();
+        await deployed.rebase();
+        const state = await deployed.state();
+        assert.equal(state, 0);
+    });
+
+    // record third product
+    it("should record third product", async () => {
+        const deployed = await Validator.deployed();
+        const product = qr.generator.store()[2];
+        await deployed.record(product);
+        const state = await deployed.state();
+        assert.equal(state, 1);
+    });
+
+    // attempt an incorrect rebasing operation
+    it("should attempt an incorrect rebasing operation", async () => {
+        const deployed = await Validator.deployed();
+        await truffleAssert.reverts(deployed.rebase());
+    });
+
+    // attempt an incorrect validation
+    it("should attempt an incorrect validation operation", async () => {
+        const deployed = await Validator.deployed();
+        const product = qr.generator.store()[6];
+        const validity = await deployed.validate.call(product);
+        assert.equal(validity, false);
+    });
+
+    // test an invalid event
+    it("should attempt an incorrect event fetch", async () => {
+        const deployed = await Validator.deployed();
+        const result = await deployed.propagate();
+        truffleAssert.eventNotEmitted(result, "Transition", (ev) => {
+            return ev._from == 0 && ev._to == 1 && ev._gas == 0;
+        });
+    });
+
+    // last event was invalid, but validation should have went through
+    it("should return state as valid", async () => {
+        const deployed = await Validator.deployed();
+        const state = await deployed.state();
+        assert.equal(state, 2);
+    });
+
+    // rebase for the last time
+    it("should rebase to the default state", async () => {
+        const deployed = await Validator.deployed();
+        await deployed.rebase();
+        const state = await deployed.state();
+        assert.equal(state, 0);
     });
 });

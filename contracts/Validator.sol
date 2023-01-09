@@ -31,16 +31,26 @@ contract Validator {
     _;
   }
 
+  modifier onValid() {
+    require(validation == Validation.Validate, "Can only rebase on valid state!");
+    _;
+  }
+
   function record(string memory _key) public onIdle() {
     validator[_key] = keccak256(abi.encodePacked(_key));
     addKey(_key);
-    emit Transition(validation, Validation.Record, gasleft());
-    validation = Validation.Record;
+    propagate();
+  }
+
+  function adapt(Validation _state) internal pure returns(Validation) {
+      Validation next_state = Validation(uint(_state) + 1);
+      return next_state;
   }
   
-  function propagate() internal {
-    emit Transition(validation, Validation.Validate, gasleft());
-    validation = Validation.Validate;
+  function propagate() public {
+    Validation next_state = adapt(validation);
+    emit Transition(validation, next_state, gasleft());
+    validation = next_state;
   }
 
   function addKey(string memory _key) internal {
@@ -51,12 +61,13 @@ contract Validator {
     delete validator[_key];
   }
 
-  function rebase() internal {
+  function rebase() public onValid() {
     for (uint256 i = 0; i < keystore.length; i++) {
       deleteKey(keystore[i]);
     }
-    emit Transition(validation, Validation.Idle, gasleft());
-    validation = Validation.Idle;
+    Validation next_state = Validation(uint(validation) - 2);
+    emit Transition(validation, next_state, gasleft());
+    validation = next_state;
   }
 
   function verify(string memory _key) internal view returns(bool) {
