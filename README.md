@@ -13,14 +13,11 @@
 
 ## Requirements
 * [TruffleSuite](https://trufflesuite.com)
-     
       * Truffle v5.6.5 (core: 5.6.5)
       * Ganache v7.5.0
       * Solidity - 0.8.17 (solc-js)
       * Node v16.18.0
       * Web3.js v1.7.4
- 
 * [npm](https://www.npmjs.com) (8.19.2)
-      
       * [Truffle Assertions](https://www.npmjs.com/package/truffle-assertions) (^0.9.2)
       * [qrcode](https://www.npmjs.com/package/qrcode) (^1.5.1)
