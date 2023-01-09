@@ -1,4 +1,4 @@
-const provider = require('qrcode')
+const provider = require("qrcode");
 
 class DataProvider {
     

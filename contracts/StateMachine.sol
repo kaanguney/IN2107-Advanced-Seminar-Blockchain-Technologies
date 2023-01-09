@@ -15,12 +15,12 @@ contract StateMachine {
   }
 
   modifier outOfBoundsForward() {
-    require(state != States.Abort, "Cannot increment state!");
+    require(state != States.Abort, "Cannot propagate state!");
     _;
   }
 
   modifier outOfBoundsBackward() {
-    require(state != States.Idle, "Cannot decrement state!");
+    require(state != States.Idle, "Cannot suppress state!");
     _;
   }
 
