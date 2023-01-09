@@ -94,9 +94,11 @@ contract(Validator, (accounts) => {
     // rebase after validating the first product
     it("should rebase to the default state", async () => {
         const deployed = await Validator.deployed();
-        await deployed.rebase();
-        const state = await deployed.state();
-        assert.equal(state, 0);
+        const result = await deployed.rebase()
+        truffleAssert.eventEmitted(result, "Transition", (ev) => {
+            console.log(`    \u2713 Gas left after public rebase call: ${ev._gas} wei`);
+            return ev._to == 0;
+        });
     });
 
     // record third product
@@ -138,11 +140,13 @@ contract(Validator, (accounts) => {
         assert.equal(state, 2);
     });
 
-    // rebase for the last time
+    // rebase externally
     it("should rebase to the default state", async () => {
         const deployed = await Validator.deployed();
-        await deployed.rebase();
-        const state = await deployed.state();
-        assert.equal(state, 0);
+        const result = await deployed.externalRebase();
+        truffleAssert.eventEmitted(result, "Transition", (ev) => {
+            console.log(`    \u2713 Gas left after external rebase call: ${ev._gas} wei`);
+            return ev._to == 0;
+        });
     });
 });

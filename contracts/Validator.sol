@@ -70,6 +70,15 @@ contract Validator {
     validation = next_state;
   }
 
+  function externalRebase() external onValid() {
+    for (uint256 i = 0; i < keystore.length; i++) {
+      deleteKey(keystore[i]);
+    }
+    Validation next_state = Validation(uint(validation) - 2);
+    emit Transition(validation, next_state, gasleft());
+    validation = next_state;
+  }
+
   function verify(string memory _key) internal view returns(bool) {
     bool found = validator[_key] == keccak256(abi.encodePacked(_key));
     return found;
