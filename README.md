@@ -24,7 +24,7 @@
   * [qrcode](https://www.npmjs.com/package/qrcode) (^1.5.1)
   
 ## Development
-* To reproduce the project locally, jump directly to the local deployment process and unit testing project contracts below. Project initialization, contract creation, creation of migration files and adjusting truffle configuration file is already taken care of.
+* To reproduce the project locally, jump directly to the local deployment process and unit testing project contracts below. Project initialization, contract creation, creation of migration files and adjusting truffle configuration file is already taken care of. Nonetheless, they are included as development steps in the section. 
 * Project is initialized by running the following command from the terminal.
   * `truffle init`
 * From now on, execute all below steps from truffle project root.
@@ -37,7 +37,7 @@
   * `truffle migrate`
 * To run all unit tests for all smart contracts, run the following command.
   * `truffle test`
-* In order to test a single smart contract, pass the relative path of the corresponding unit test file. For instace to test [FiniteStateMachine.sol](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts/FiniteStateMachine.sol) only, run the following command.
+* In order to test a single smart contract, pass the relative path of the corresponding unit test file. For instance to test [FiniteStateMachine.sol](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts/FiniteStateMachine.sol) only, run the following command.
   * `truffle test ./test/8_finite_state_machine_test.js`
 
 ## Contracts
