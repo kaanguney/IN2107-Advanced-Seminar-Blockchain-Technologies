@@ -24,7 +24,8 @@
   * [qrcode](https://www.npmjs.com/package/qrcode) (^1.5.1)
   
 ## Development
-* Project is initialized by running the following command from the terminal. This does not have to be executed, a clone of this repository provides an already initialized project.
+* To reproduce the project locally, jump directly to the local deployment process and unit testing project contracts below. Project initialization, contract creation, creation of migration files and adjusting truffle configuration file is already taken care of.
+* Project is initialized by running the following command from the terminal.
   * `truffle init`
 * From now on, execute all below steps from truffle project root.
 * [Validator.sol](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts/Validator.sol) is created under [contracts](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts) directory by running the following command from the terminal.
