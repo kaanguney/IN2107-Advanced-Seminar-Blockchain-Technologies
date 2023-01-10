@@ -22,6 +22,22 @@
 * [npm](https://www.npmjs.com) (8.19.2)
   * [Truffle Assertions](https://www.npmjs.com/package/truffle-assertions) (^0.9.2)
   * [qrcode](https://www.npmjs.com/package/qrcode) (^1.5.1)
+  
+## Development
+* Project is initialized by running the following command from the terminal. This does not have to be executed, a clone of this repository provides an already initialized project.
+  * `truffle init`
+* From now on, execute all below steps from truffle project root.
+* [Validator.sol](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts/Validator.sol) is created under [contracts](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts) directory by running the following command from the terminal.
+  * `truffle create contract Validator`
+* [FiniteStateMachine.sol](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts/FiniteStateMachine.sol) is created under [contracts](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts) directory by running the following command from the terminal.
+  * `truffle create contract FiniteStateMachine`
+* Inside [migrations](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/migrations) directory, create a migration, i.e. deployment script for each smart contract to deploy the contracts on development network on port 7545 unless specified otherwise in [truffle-config.js](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/truffle-config.js). It is imperative to make sure that [Ganache](https://trufflesuite.com/ganache/) is running on port 7545 beforehand. Again, a clone of this repository provides the migration files. To reproduce this step, only make sure that you install [Ganache](https://trufflesuite.com/ganache/) and launch it on port 7545.
+* Contracts are deployed on the development network by running the following command. Note that each time a change in source code of a smart contract is made, contract has to be deployed again to reflect changes. 
+  * `truffle migrate`
+* To run all unit tests for all smart contracts, run the following command.
+  * `truffle test`
+* In order to test a single smart contract, pass the relative path of the corresponding unit test file. For instace to test [FiniteStateMachine.sol](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts/FiniteStateMachine.sol) only, run the following command.
+  * `truffle test ./test/8_finite_state_machine_test.js`
 
 ## Contracts
 * Individual patterns and migration files are self-explanatory, therefore this section mainly focuses on two smart contracts, that are [Validator.sol](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts/Validator.sol) and [FiniteStateMachine.sol](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts/FiniteStateMachine.sol).
