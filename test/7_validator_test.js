@@ -68,9 +68,10 @@ contract(Validator, (accounts) => {
     // state transitions to `Validate` from `Record`
     it("should validate first product", async () => {
         const product = qr.generator.store()[0];
-        await deployed.validate(product);
-        const state = await deployed.currentState();
-        assert.equal(state, Validator.Validation.Validate);
+        const result = await deployed.validate(product);
+        truffleAssert.eventEmitted(result, "Validity", (ev) => {
+            return ev._validity;
+        });
     });
 
     // attempt to call an internal function
@@ -113,9 +114,10 @@ contract(Validator, (accounts) => {
     // state transitions to `Validate` from `Record`
     it("should validate third product", async () => {
         const product = qr.generator.store()[2];
-        await deployed.validate(product);
-        const state = await deployed.currentState();
-        assert.equal(state, Validator.Validation.Validate);
+        const result = await deployed.validate(product);
+        truffleAssert.eventEmitted(result, "Validity", (ev) => {
+            return ev._validity;
+        });
     });
 
     // rebase for the last time

@@ -13,6 +13,7 @@ contract Validator {
   mapping(string => uint256) private indexer;
   string[] private keystore;
   event Transition(Validation _from, Validation _to, uint256 _gas);
+  event Validity(bool _validity);
 
   constructor() {
     validation = Validation.Idle;
@@ -67,6 +68,7 @@ contract Validator {
   function validate(string calldata _key) external returns(bool) {
     require(validation == Validation.Record, "Cannot propagate state to validate data!");
     bool validity = verify(_key);
+    emit Validity(validity);
     emit Transition(validation, Validation.Validate, gasleft());
     validation = transitionValidate();
     return validity;
