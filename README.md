@@ -57,6 +57,7 @@
   * Note that deletion from a mapping does not free memory in Solidity because mapping itself lies in the storage for life. Instead, deletion sets the mapping value to 0.
   * Finally, Validator transitions to the default state by `transitionIdle()`, this time emitting a state transition event and `Validity` event which specifically emits a boolean to determine whether the state machine was successful on product validation or not.
 * [FiniteStateMachine.sol](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts/FiniteStateMachine.sol)
-  * Unlike [main](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts/FiniteStateMachine.sol), development branch inherits from [Validator.sol](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts/Validator.sol).
+  * Unlike [main](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts/FiniteStateMachine.sol), [development](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/development/contracts/FiniteStateMachine.sol) branch inherits from [Validator.sol](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/development/Validator.sol).
+  * `this.f()` pattern is utilized.
   * Finite-state machine encapsulates all three phases of state transitioning by wrapping them up to a single function, `transit(string calldata _key)`.
   * Calling `transit(string calldata _key)` is equivalent to a single validation round. 
