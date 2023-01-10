@@ -8,85 +8,67 @@ contract Validator {
     Record,
     Validate
   }
-  Validation validation;
-  mapping(string => bytes32) validator;
-  string[] keystore;
+  Validation private validation;
+  mapping(string => bytes32) private validator;
+  mapping(string => uint256) private indexer;
+  string[] private keystore;
   event Transition(Validation _from, Validation _to, uint256 _gas);
 
   constructor() {
     validation = Validation.Idle;
   }
 
-  function state() public view returns(Validation) {
+  function currentState() external view returns(Validation) {
     return validation;
   }
 
-  modifier onIdle() {
+  function transitionIdle() internal pure returns(Validation) {
+    return Validation.Idle;
+  }
+
+  function transitionRecord() internal pure returns(Validation) {
+    return Validation.Record;
+  }
+
+  function transitionValidate() internal pure returns(Validation) {
+    return Validation.Validate;
+  }
+
+  function record(string memory _key) external {
     require(validation == Validation.Idle, "Cannot propagate state to record data!");
-    _;
-  }
-
-  modifier onRecord() {
-    require(validation == Validation.Record, "Cannot propagate state to validate data!");
-    _;
-  }
-
-  modifier onValid() {
-    require(validation == Validation.Validate, "Can only rebase on valid state!");
-    _;
-  }
-
-  function record(string memory _key) public onIdle() {
     validator[_key] = keccak256(abi.encodePacked(_key));
     addKey(_key);
-    propagate();
-  }
-
-  function adapt(Validation _state) internal pure returns(Validation) {
-      Validation next_state = Validation(uint(_state) + 1);
-      return next_state;
-  }
-  
-  function propagate() public {
-    Validation next_state = adapt(validation);
-    emit Transition(validation, next_state, gasleft());
-    validation = next_state;
+    emit Transition(validation, Validation.Record, gasleft());
+    validation = transitionRecord();
   }
 
   function addKey(string memory _key) internal {
     keystore.push(_key);
+    indexer[_key] = keystore.length - 1;
   }
 
   function deleteKey(string memory _key) internal {
     delete validator[_key];
+    delete indexer[_key];
   }
 
-  function rebase() public onValid() {
-    for (uint256 i = 0; i < keystore.length; i++) {
-      deleteKey(keystore[i]);
-    }
-    Validation next_state = Validation(uint(validation) - 2);
-    emit Transition(validation, next_state, gasleft());
-    validation = next_state;
+  function rebase(string calldata _key) external {
+    require(validation == Validation.Validate, "Can only rebase on valid state!");
+    deleteKey(_key);
+    emit Transition(validation, Validation.Idle, gasleft());
+    validation = transitionIdle();
   }
 
-  function externalRebase() external onValid() {
-    for (uint256 i = 0; i < keystore.length; i++) {
-      deleteKey(keystore[i]);
-    }
-    Validation next_state = Validation(uint(validation) - 2);
-    emit Transition(validation, next_state, gasleft());
-    validation = next_state;
-  }
-
-  function verify(string memory _key) internal view returns(bool) {
+  function verify(string calldata _key) internal view returns(bool) {
     bool found = validator[_key] == keccak256(abi.encodePacked(_key));
     return found;
   }
 
-  function validate(string memory _key) public onRecord() returns(bool) {
+  function validate(string calldata _key) external returns(bool) {
+    require(validation == Validation.Record, "Cannot propagate state to validate data!");
     bool validity = verify(_key);
-    propagate();
+    emit Transition(validation, Validation.Validate, gasleft());
+    validation = transitionValidate();
     return validity;
   }
 }
