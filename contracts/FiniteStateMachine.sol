@@ -3,29 +3,25 @@ pragma solidity >=0.4.22 <0.9.0;
 
 import "./Validator.sol";
 
-contract FiniteStateMachine {
+/// @title Finite-state machine
+/// @author {kaanguney}, {erincar}
+/// @notice State machine pattern implemented in {Validator.sol} is accessed via inheritance
+/// @dev A single validation process is encapsulated into an external contract function
 
-  Validator private validator;
+contract FiniteStateMachine is Validator {
+
   event Automata(string _input, Validator.Validation _start, Validator.Validation _end, bool _validity);
 
-  constructor() {
-    validator = new Validator();
-  }
-
-  function state() external view returns(Validator.Validation) {
-    return validator.currentState();
-  }
-
-  function machine() external view returns(Validator) {
-    return validator;
+  function state() external view returns(Validation) {
+    return this.currentState();
   }
 
   function transit(string calldata _key) external {
-    Validator.Validation initial_state = validator.currentState();
-    validator.record(_key);
-    bool validity = validator.validate(_key);
-    validator.rebase(_key);
-    Validator.Validation last_state = validator.currentState();
+    Validator.Validation initial_state = this.state();
+    this.record(_key);
+    bool validity = this.validate(_key);
+    this.rebase(_key);
+    Validator.Validation last_state = this.state();
     emit Automata(_key, initial_state, last_state, validity);
   }
 }

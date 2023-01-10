@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
+/// @title {The Validator}
+/// @author {kaanguney}, {erincar}
+/// @notice Product validation is iterative, state transitions are guarded by a parametrized function modifier
+/// @dev Default state is {Validation.Idle}. A single validation terminates upon rebasing back to default state
+
 contract Validator {
 
   enum Validation {
@@ -19,6 +24,11 @@ contract Validator {
     validation = Validation.Idle;
   }
 
+  modifier guardState(Validation _state) {
+    require(validation == _state, "Invalid state!");
+    _;
+  }
+
   function currentState() external view returns(Validation) {
     return validation;
   }
@@ -35,8 +45,7 @@ contract Validator {
     return Validation.Validate;
   }
 
-  function record(string memory _key) external {
-    require(validation == Validation.Idle, "Cannot propagate state to record data!");
+  function record(string memory _key) external guardState(Validation.Idle) {
     validator[_key] = keccak256(abi.encodePacked(_key));
     addKey(_key);
     emit Transition(validation, Validation.Record, gasleft());
@@ -53,8 +62,7 @@ contract Validator {
     delete indexer[_key];
   }
 
-  function rebase(string calldata _key) external {
-    require(validation == Validation.Validate, "Can only rebase on valid state!");
+  function rebase(string calldata _key) external guardState(Validation.Validate) {
     deleteKey(_key);
     emit Transition(validation, Validation.Idle, gasleft());
     validation = transitionIdle();
@@ -65,8 +73,7 @@ contract Validator {
     return found;
   }
 
-  function validate(string calldata _key) external returns(bool) {
-    require(validation == Validation.Record, "Cannot propagate state to validate data!");
+  function validate(string calldata _key) external guardState(Validation.Record) returns(bool) {
     bool validity = verify(_key);
     emit Validity(validity);
     emit Transition(validation, Validation.Validate, gasleft());
