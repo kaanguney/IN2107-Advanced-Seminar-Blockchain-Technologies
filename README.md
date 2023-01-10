@@ -59,5 +59,5 @@
 * [FiniteStateMachine.sol](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts/FiniteStateMachine.sol)
   * Constructor takes in an instance of [Validator.sol](https://github.com/kaanguney/IN2107-Advanced-Seminar-Blockchain-Technologies/tree/main/contracts/Validator.sol). 
   * Note that the Validator instance of Finite-state machine utilizes an arbitrarily long mapping of strings to bytes as a `private` variable, which implies the [Eternal Storage](https://fravoll.github.io/solidity-patterns/eternal_storage.html) pattern under the hood.
-  * Finite-state Machine encapsulates all three phases of state transitioning by wrapping them up to a single function, `transit(string calldata _key)`.
+  * Finite-state machine encapsulates all three phases of state transitioning by wrapping them up to a single function, `transit(string calldata _key)`.
   * Calling `transit(string calldata _key)` is equivalent to a single validation round. 
